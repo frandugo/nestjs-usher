@@ -14,26 +14,26 @@ export class ChurchesService {
   }
 
   async findOne(id: string) {
-    const product = await this.churchModel.findById(id).exec();
-    if (!product) {
+    const church = await this.churchModel.findById(id).exec();
+    if (!church) {
       throw new NotFoundException(`Church #${id} not found`);
     }
-    return product;
+    return church;
   }
 
   create(data: CreateChurchDto) {
-    const newProduct = new this.churchModel(data);
-    return newProduct.save();
+    const newChurch = new this.churchModel(data);
+    return newChurch.save();
   }
 
   update(id: string, changes: UpdateChurchDto) {
-    const product = this.churchModel
+    const church = this.churchModel
       .findByIdAndUpdate(id, { $set: changes }, { new: true })
       .exec();
-    if (!product) {
-      throw new NotFoundException(`Product #${id} not found`);
+    if (!church) {
+      throw new NotFoundException(`Church #${id} not found`);
     }
-    return product;
+    return church;
   }
 
   remove(id: string) {

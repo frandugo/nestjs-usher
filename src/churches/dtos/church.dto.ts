@@ -8,7 +8,7 @@ export class CreateChurchDto {
 
   @IsString()
   @IsEmail()
-  @ApiProperty({ description: 'the email of church' })
+  @ApiProperty({ description: 'the email of the church' })
   readonly email: string;
 
   @IsString()
@@ -22,7 +22,7 @@ export class CreateChurchDto {
 
   @IsArray()
   @IsNotEmpty()
-  readonly users: string[];
+  readonly users: [string];
 }
 
 export class UpdateChurchDto extends PartialType(

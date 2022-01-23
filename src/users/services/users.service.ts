@@ -10,32 +10,31 @@ export class UsersService {
   constructor(@InjectModel(User.name) private userModel: Model<User>) {}
 
   findAll() {
-    // return this.userModel.find().populate('church').exec();
-    return this.userModel.find().exec();
+    return this.userModel.find().populate('church').exec();
   }
 
   async findOne(id: string) {
     // const product = await this.userModel.findById(id).populate('church').exec();
-    const product = await this.userModel.findById(id).exec();
-    if (!product) {
-      throw new NotFoundException(`Product #${id} not found`);
+    const user = await this.userModel.findById(id).exec();
+    if (!user) {
+      throw new NotFoundException(`User #${id} not found`);
     }
-    return product;
+    return user;
   }
 
   create(data: CreateUserDto) {
-    const newProduct = new this.userModel(data);
-    return newProduct.save();
+    const newUser = new this.userModel(data);
+    return newUser.save();
   }
 
   update(id: string, changes: UpdateUserDto) {
-    const product = this.userModel
+    const user = this.userModel
       .findByIdAndUpdate(id, { $set: changes }, { new: true })
       .exec();
-    if (!product) {
-      throw new NotFoundException(`Product #${id} not found`);
+    if (!user) {
+      throw new NotFoundException(`User #${id} not found`);
     }
-    return product;
+    return user;
   }
 
   remove(id: string) {

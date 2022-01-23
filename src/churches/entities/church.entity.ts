@@ -5,10 +5,10 @@ import { User } from './../../users/entities/user.entity';
 
 @Schema()
 export class Church extends Document {
-  @Prop({ required: true, index: true })
+  @Prop({ required: true })
   name: string;
 
-  @Prop({ required: true, unique: true })
+  @Prop({ required: true })
   email: string;
 
   @Prop({ required: true })
@@ -17,7 +17,7 @@ export class Church extends Document {
   @Prop({ required: true })
   shepherd: string;
 
-  @Prop({ type: [{ type: Types.ObjectId, ref: User.name }] })
+  @Prop({ type: [{ type: Types.ObjectId, ref: 'User' }] })
   users: Types.Array<User>;
 }
 
