@@ -1,4 +1,10 @@
-import { IsString, IsNotEmpty, IsNumber, IsDate } from 'class-validator';
+import {
+  IsString,
+  IsNotEmpty,
+  IsNumber,
+  IsDate,
+  IsMongoId,
+} from 'class-validator';
 import { PartialType, ApiProperty } from '@nestjs/swagger';
 
 export class CreateOfferingDto {
@@ -21,14 +27,12 @@ export class CreateOfferingDto {
   @ApiProperty()
   readonly type: string;
 
-  @IsString()
   @IsNotEmpty()
-  @ApiProperty()
+  @IsMongoId()
   readonly user: string;
 
-  @IsString()
   @IsNotEmpty()
-  @ApiProperty()
+  @IsMongoId()
   readonly church: string;
 }
 

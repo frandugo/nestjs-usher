@@ -10,6 +10,7 @@ import { ChurchesModule } from './churches/churches.module';
 import { UsersModule } from './users/users.module';
 import { OfferingsModule } from './offerings/offerings.module';
 import { DatabaseModule } from './database/database.module';
+import { DisciplesModule } from './disciples/disciples.module';
 
 import { enviroments } from './enviroments';
 import config from './config';
@@ -31,6 +32,7 @@ import config from './config';
     UsersModule,
     DatabaseModule,
     OfferingsModule,
+    DisciplesModule,
   ],
   controllers: [AppController],
   providers: [AppService],

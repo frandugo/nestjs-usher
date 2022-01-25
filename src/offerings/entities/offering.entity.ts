@@ -1,9 +1,12 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import { Document, Types } from 'mongoose';
+
+import { User } from '../../users/entities/user.entity';
+import { Church } from '../../churches/entities/church.entity';
 
 @Schema()
 export class Offering extends Document {
-  @Prop({ required: true, unique: true })
+  @Prop({ required: true })
   quantity: string;
 
   @Prop({ required: true, index: true })
@@ -15,11 +18,11 @@ export class Offering extends Document {
   @Prop({ required: true })
   type: string;
 
-  @Prop({ required: true })
-  user: string;
+  @Prop({ type: Types.ObjectId, ref: 'User' })
+  user: User | Types.ObjectId;
 
-  @Prop({ required: true })
-  church: string;
+  @Prop({ type: Types.ObjectId, ref: 'Church' })
+  church: Church | Types.ObjectId;
 }
 
 export const OfferingSchema = SchemaFactory.createForClass(Offering);

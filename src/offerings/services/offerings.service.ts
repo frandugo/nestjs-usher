@@ -12,7 +12,7 @@ export class OfferingsService {
   ) {}
 
   findAll() {
-    return this.OfferingModel.find().exec();
+    return this.OfferingModel.find().populate('user').populate('church').exec();
   }
 
   async findOne(id: string) {
