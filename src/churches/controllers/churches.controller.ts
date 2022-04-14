@@ -8,6 +8,7 @@ import {
   Delete,
   HttpStatus,
   HttpCode,
+  UseGuards,
 } from '@nestjs/common';
 
 import { ChurchesService } from '../services/churches.service';
@@ -18,11 +19,15 @@ import {
 } from '../dtos/church.dto';
 
 import { MongoIdPipe } from '../../common/mongo-id.pipe';
+import { ApiKeyGuard } from './../../auth/guards/api-key.guard';
+
+import { Public } from '../../auth/decorators/public.decorator';
 
 @Controller('churches')
 export class ChurchesController {
   constructor(private churchesService: ChurchesService) {}
 
+  @UseGuards(ApiKeyGuard)
   @Get()
   findAll() {
     return this.churchesService.findAll();
@@ -34,6 +39,7 @@ export class ChurchesController {
     return this.churchesService.findOne(id);
   }
 
+  @Public()
   @Post()
   create(@Body() payload: CreateChurchDto) {
     return this.churchesService.create(payload);

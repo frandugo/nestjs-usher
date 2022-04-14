@@ -13,6 +13,7 @@ import { DatabaseModule } from './database/database.module';
 import { DisciplesModule } from './disciples/disciples.module';
 
 import { enviroments } from './enviroments';
+import { AuthModule } from './auth/auth.module';
 import config from './config';
 
 @Module({
@@ -33,6 +34,7 @@ import config from './config';
     DatabaseModule,
     OfferingsModule,
     DisciplesModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
