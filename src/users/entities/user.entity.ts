@@ -3,8 +3,6 @@ import { Document, Types } from 'mongoose';
 
 import { Church } from '../../churches/entities/church.entity';
 
-import { Exclude } from 'class-transformer';
-
 @Schema()
 export class User extends Document {
   @Prop({ required: true })
@@ -16,7 +14,6 @@ export class User extends Document {
   @Prop({ required: true, unique: true })
   email: string;
 
-  @Exclude()
   @Prop({ required: true })
   password: string;
 
