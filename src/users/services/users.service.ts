@@ -28,8 +28,9 @@ export class UsersService {
     const newUser = new this.userModel(data);
     const hashPassword = await bcrypt.hash(newUser.password, 10);
     newUser.password = hashPassword;
-    console.log(newUser);
-    // return newUser.save();
+    const userSaved = await newUser.save();
+    const { password, ...userObj } = userSaved.toJSON();
+    return userObj;
   }
 
   update(id: string, changes: UpdateUserDto) {
@@ -44,6 +45,10 @@ export class UsersService {
 
   remove(id: string) {
     return this.userModel.findByIdAndDelete(id);
+  }
+
+  findByEmail(email: string) {
+    return this.userModel.findOne({ email }).exec();
   }
 
   //   async getOrderByUser(id: number) {
