@@ -12,6 +12,7 @@ export class AuthService {
     if (user && isMatch) {
       return user;
     }
+    console.log({ user });
     return null;
   }
 }
