@@ -16,8 +16,7 @@ export class UsersService {
   }
 
   async findOne(id: string) {
-    // const product = await this.userModel.findById(id).populate('church').exec();
-    const user = await this.userModel.findById(id).exec();
+    const user = await this.userModel.findById(id).populate('church').exec();
     if (!user) {
       throw new NotFoundException(`User #${id} not found`);
     }
@@ -47,16 +46,9 @@ export class UsersService {
     return this.userModel.findByIdAndDelete(id);
   }
 
-  async findByEmail(email: string) {
-    return await this.userModel.findOne({ email }).exec();
+  async findByEmail(email: string): Promise<User> | undefined {
+    const userFound = await this.userModel.findOne({ email }).exec();
+    return userFound;
   }
 
-  //   async getOrderByUser(id: number) {
-  //     const user = this.findOne(id);
-  //     return {
-  //       date: new Date(),
-  //       user,
-  //       products: await this.productsService.findAll(),
-  //     };
-  //   }
 }

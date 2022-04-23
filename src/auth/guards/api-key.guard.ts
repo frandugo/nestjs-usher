@@ -1,14 +1,27 @@
-import { CanActivate, ExecutionContext, Injectable, UnauthorizedException } from '@nestjs/common';
+import {
+  CanActivate,
+  ExecutionContext,
+  Injectable,
+  UnauthorizedException,
+  Inject,
+} from '@nestjs/common';
+import { Reflector } from '@nestjs/core';
+import { ConfigType } from '@nestjs/config';
 import { Observable } from 'rxjs';
 
-import { Reflector } from '@nestjs/core'; 
-import { Request } from 'express';
+import config from './../../config';
 
-import { IS_PUBLIC_KEY } from '../decorators/public.decorator';
+import { IS_PUBLIC_KEY } from './../decorators/public.decorator';
+
+import { Request } from 'express';
 
 @Injectable()
 export class ApiKeyGuard implements CanActivate {
-  constructor(private reflector: Reflector) {}
+  constructor(
+    private reflector: Reflector,
+    @Inject(config.KEY) private configService: ConfigType<typeof config>,
+  ) {}
+
   canActivate(
     context: ExecutionContext,
   ): boolean | Promise<boolean> | Observable<boolean> {
@@ -18,10 +31,10 @@ export class ApiKeyGuard implements CanActivate {
     }
     const request = context.switchToHttp().getRequest<Request>();
     const authHeader = request.header('Auth');
-    const auth = authHeader === '12345';
-    if (!auth) {
-      throw new UnauthorizedException('Not Allow it');
+    const isAuth = authHeader === this.configService.apiKey;
+    if (!isAuth) {
+      throw new UnauthorizedException('not allow');
     }
-    return authHeader === '12345';
+    return isAuth;
   }
 }

@@ -5,9 +5,8 @@ import { Request } from 'express';
 @Controller('auth')
 export class AuthController {
   @UseGuards(AuthGuard('local'))
-  @Post()
+  @Post('login')
   login(@Req() req: Request) {
-    console.log('sisas');
     return req.user;
   }
 }
