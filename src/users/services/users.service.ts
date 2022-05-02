@@ -5,6 +5,8 @@ import { Model } from 'mongoose';
 import { User } from '../entities/user.entity';
 import { CreateUserDto, UpdateUserDto } from '../dtos/user.dto';
 
+import * as bcrypt from 'bcrypt';
+
 @Injectable()
 export class UsersService {
   constructor(@InjectModel(User.name) private userModel: Model<User>) {}
@@ -14,17 +16,20 @@ export class UsersService {
   }
 
   async findOne(id: string) {
-    // const product = await this.userModel.findById(id).populate('church').exec();
-    const user = await this.userModel.findById(id).exec();
+    const user = await this.userModel.findById(id).populate('church').exec();
     if (!user) {
       throw new NotFoundException(`User #${id} not found`);
     }
     return user;
   }
 
-  create(data: CreateUserDto) {
+  async create(data: CreateUserDto) {
     const newUser = new this.userModel(data);
-    return newUser.save();
+    const hashPassword = await bcrypt.hash(newUser.password, 10);
+    newUser.password = hashPassword;
+    const userSaved = await newUser.save();
+    const { password, ...userObj } = userSaved.toJSON();
+    return userObj;
   }
 
   update(id: string, changes: UpdateUserDto) {
@@ -41,12 +46,9 @@ export class UsersService {
     return this.userModel.findByIdAndDelete(id);
   }
 
-  //   async getOrderByUser(id: number) {
-  //     const user = this.findOne(id);
-  //     return {
-  //       date: new Date(),
-  //       user,
-  //       products: await this.productsService.findAll(),
-  //     };
-  //   }
+  async findByEmail(email: string): Promise<User> | undefined {
+    const userFound = await this.userModel.findOne({ email }).exec();
+    return userFound;
+  }
+
 }
