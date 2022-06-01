@@ -18,7 +18,7 @@ export class User extends Document {
   password: string;
 
   @Prop({ required: true })
-  role: number;
+  role: string;
 
   @Prop({ type: Types.ObjectId, ref: 'Church' })
   church: Church | Types.ObjectId;

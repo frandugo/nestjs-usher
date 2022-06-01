@@ -50,5 +50,4 @@ export class UsersService {
     const userFound = await this.userModel.findOne({ email }).exec();
     return userFound;
   }
-
 }

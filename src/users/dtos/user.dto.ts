@@ -29,7 +29,7 @@ export class CreateUserDto {
 
   @IsNotEmpty()
   @ApiProperty()
-  readonly role: number;
+  readonly role: string;
 
   @IsNotEmpty()
   @IsMongoId()
